@@ -11,11 +11,6 @@ struct task : Identifiable {
     var id = UUID()
     var fruitsName: String
     var isDone : Bool
-
-    init(fruitsName: String, isDone: Bool) {
-        self.fruitsName = fruitsName
-        self.isDone = isDone
-    }
 }
 
 struct ContentView: View {
@@ -25,23 +20,34 @@ struct ContentView: View {
         .init(fruitsName: "みかん", isDone: true),
         .init(fruitsName: "バナナ", isDone: false),
         .init(fruitsName: "パイナップル", isDone: true),
-
     ]
-
 
     var body: some View {
         VStack {
             List {
                 ForEach(tasks) { task in
                     HStack {
-                        Image(systemName: "checkmark")
-                            .foregroundColor(task.isDone ? .red : .white)
+                        CheckView(isDone: task.isDone)
 
                         Text(task.fruitsName)
                         Spacer()
                     }
                 }
             }
+        }
+    }
+}
+
+struct CheckView: View {
+    let isDone: Bool
+
+    var body: some View {
+        if isDone {
+            Image(systemName: "checkmark")
+                .foregroundColor(.red)
+        } else {
+            Image(systemName: "checkmark")
+                .hidden()
         }
     }
 }
